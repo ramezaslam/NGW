@@ -1,7 +1,5 @@
 {
   "name": "GlassPro Manager",
   "description": "A comprehensive business management suite for glass workshops, covering inventory, sales, invoicing, and service tracking.",
-  "requestFramePermissions": [
-    "camera"
-  ]
+  "requestFramePermissions": []
 }
