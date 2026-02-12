@@ -64,26 +64,30 @@ const Layout: React.FC<LayoutProps> = ({ children, title }) => {
         {children}
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 glass-blur border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50 no-print">
-        <NavLink to="/" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 glass-blur border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50 no-print overflow-x-auto no-scrollbar">
+        <NavLink to="/" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors px-2 ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
           <span className="material-icons-round">dashboard</span>
           <span className="text-[10px] font-black uppercase tracking-tighter">Home</span>
         </NavLink>
-        <NavLink to="/invoices" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
+        <NavLink to="/invoices" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors px-2 ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
           <span className="material-icons-round">receipt_long</span>
           <span className="text-[10px] font-black uppercase tracking-tighter">Sales</span>
         </NavLink>
-        <NavLink to="/inventory" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
+        <NavLink to="/inventory" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors px-2 ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
           <span className="material-icons-round">inventory_2</span>
           <span className="text-[10px] font-black uppercase tracking-tighter">Stock</span>
         </NavLink>
-        <NavLink to="/workers" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
+        <NavLink to="/workers" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors px-2 ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
           <span className="material-icons-round">engineering</span>
           <span className="text-[10px] font-black uppercase tracking-tighter">Staff</span>
         </NavLink>
-        <NavLink to="/services" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
+        <NavLink to="/services" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors px-2 ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
           <span className="material-icons-round">home_repair_service</span>
           <span className="text-[10px] font-black uppercase tracking-tighter">Jobs</span>
+        </NavLink>
+        <NavLink to="/settings" className={({ isActive }) => `flex flex-col items-center gap-1 transition-colors px-2 ${isActive ? 'text-emerald-500' : 'text-slate-400'}`}>
+          <span className="material-icons-round">settings</span>
+          <span className="text-[10px] font-black uppercase tracking-tighter">Settings</span>
         </NavLink>
       </nav>
       

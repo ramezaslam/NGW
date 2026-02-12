@@ -11,6 +11,15 @@ export type DocumentType = 'QUOTATION' | 'INVOICE';
 
 export type ProductCategory = 'Plain Glass' | 'Mirror' | 'Toughened' | 'Tinted' | 'Aluminum Section' | 'Aluminum Hardware' | 'Silicon/Rubber';
 
+export interface AppSettings {
+  shopName: string;
+  tagline: string;
+  address: string;
+  phone: string;
+  ntn: string;
+  invoiceNotice: string;
+}
+
 export interface GlassItem {
   id: string;
   name: string;

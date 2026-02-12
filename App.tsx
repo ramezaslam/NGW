@@ -7,6 +7,7 @@ import Inventory from './components/Inventory';
 import Invoices from './components/Invoices';
 import Services from './components/Services';
 import Workers from './components/Workers';
+import Settings from './components/Settings';
 import Login from './components/Login';
 import { AppProvider, useApp } from './context/AppContext';
 
@@ -25,6 +26,7 @@ const AppContent: React.FC = () => {
       case '/invoices': return 'Sales & Invoices';
       case '/services': return 'Business Services';
       case '/workers': return 'Personnel Management';
+      case '/settings': return 'System Settings';
       default: return 'GlassPro Manager';
     }
   };
@@ -37,6 +39,7 @@ const AppContent: React.FC = () => {
         <Route path="/invoices" element={<Invoices />} />
         <Route path="/services" element={<Services />} />
         <Route path="/workers" element={<Workers />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<Dashboard />} />
       </Routes>
     </Layout>

@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { GlassItem, Invoice, GlassService, InvoiceStatus, Worker, DocumentType } from '../types';
+import { GlassItem, Invoice, GlassService, InvoiceStatus, Worker, DocumentType, AppSettings } from '../types';
 import { MOCK_INVENTORY, MOCK_INVOICES, MOCK_SERVICES } from '../constants';
 
 interface AppContextType {
@@ -8,9 +8,11 @@ interface AppContextType {
   invoices: Invoice[];
   services: GlassService[];
   workers: Worker[];
+  settings: AppSettings;
   isAuthenticated: boolean;
   login: (username: string, password: string) => boolean;
   logout: () => void;
+  updateSettings: (newSettings: AppSettings) => void;
   addInventoryItem: (item: Omit<GlassItem, 'id'>) => void;
   updateInventoryItem: (item: GlassItem) => void;
   deleteInventoryItem: (id: string) => void;
@@ -26,11 +28,25 @@ interface AppContextType {
   deleteWorker: (id: string) => void;
 }
 
+const DEFAULT_SETTINGS: AppSettings = {
+  shopName: 'GLASS & ALU PRO',
+  tagline: 'Industrial Fittings & Fabrications',
+  address: 'Main G.T Road, Workshop Zone, Gujranwala',
+  phone: '+92 300 1234567',
+  ntn: '7766554-1',
+  invoiceNotice: '1. Check materials before installation. No claims after fixing.\n2. 50% advance for all custom Aluminum frame orders.\n3. Broken glass after delivery is customer\'s responsibility.'
+};
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return localStorage.getItem('glasspro_auth') === 'true';
+  });
+
+  const [settings, setSettings] = useState<AppSettings>(() => {
+    const saved = localStorage.getItem('glasspro_settings');
+    return saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
   });
 
   const [inventory, setInventory] = useState<GlassItem[]>(() => {
@@ -63,6 +79,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [isAuthenticated]);
 
   useEffect(() => {
+    localStorage.setItem('glasspro_settings', JSON.stringify(settings));
+  }, [settings]);
+
+  useEffect(() => {
     localStorage.setItem('glass_inventory', JSON.stringify(inventory));
   }, [inventory]);
 
@@ -88,6 +108,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const logout = () => {
     setIsAuthenticated(false);
+  };
+
+  const updateSettings = (newSettings: AppSettings) => {
+    setSettings(newSettings);
   };
 
   const addInventoryItem = (item: Omit<GlassItem, 'id'>) => {
@@ -163,7 +187,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   return (
     <AppContext.Provider value={{
-      inventory, invoices, services, workers, isAuthenticated, login, logout,
+      inventory, invoices, services, workers, settings, isAuthenticated, login, logout, updateSettings,
       addInventoryItem, updateInventoryItem, deleteInventoryItem,
       addInvoice, updateInvoice, updateInvoiceStatus, assignWorkerToInvoice, convertToInvoice,
       addService, deleteService,
