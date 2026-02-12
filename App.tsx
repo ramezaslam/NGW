@@ -6,21 +6,26 @@ import Dashboard from './components/Dashboard';
 import Inventory from './components/Inventory';
 import Invoices from './components/Invoices';
 import Services from './components/Services';
-import Workers from './components/Workers'; // Import new component
-import { AppProvider } from './context/AppContext';
+import Workers from './components/Workers';
+import Login from './components/Login';
+import { AppProvider, useApp } from './context/AppContext';
 
 const AppContent: React.FC = () => {
+  const { isAuthenticated } = useApp();
   const location = useLocation();
   
+  if (!isAuthenticated) {
+    return <Login />;
+  }
+
   const getPageTitle = () => {
     switch (location.pathname) {
-      case '/': return 'Dashboard';
-      case '/inventory': return 'Inventory';
+      case '/': return 'Workshop Dashboard';
+      case '/inventory': return 'Stock Inventory';
       case '/invoices': return 'Sales & Invoices';
-      case '/services': return 'Our Services';
-      case '/workers': return 'Worker Management';
-      case '/settings': return 'Settings';
-      default: return 'GlassPro';
+      case '/services': return 'Business Services';
+      case '/workers': return 'Personnel Management';
+      default: return 'GlassPro Manager';
     }
   };
 
@@ -32,12 +37,7 @@ const AppContent: React.FC = () => {
         <Route path="/invoices" element={<Invoices />} />
         <Route path="/services" element={<Services />} />
         <Route path="/workers" element={<Workers />} />
-        <Route path="/settings" element={
-          <div className="flex flex-col items-center justify-center h-96 text-slate-400 space-y-4">
-            <span className="material-icons-round text-6xl">construction</span>
-            <p className="font-medium">Settings coming soon...</p>
-          </div>
-        } />
+        <Route path="*" element={<Dashboard />} />
       </Routes>
     </Layout>
   );

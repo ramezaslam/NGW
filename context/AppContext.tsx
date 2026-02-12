@@ -8,6 +8,9 @@ interface AppContextType {
   invoices: Invoice[];
   services: GlassService[];
   workers: Worker[];
+  isAuthenticated: boolean;
+  login: (username: string, password: string) => boolean;
+  logout: () => void;
   addInventoryItem: (item: Omit<GlassItem, 'id'>) => void;
   updateInventoryItem: (item: GlassItem) => void;
   deleteInventoryItem: (id: string) => void;
@@ -26,6 +29,10 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem('glasspro_auth') === 'true';
+  });
+
   const [inventory, setInventory] = useState<GlassItem[]>(() => {
     const saved = localStorage.getItem('glass_inventory');
     return saved ? JSON.parse(saved) : MOCK_INVENTORY.map(item => ({ ...item, thicknessMM: item.thicknessMM || 5 }));
@@ -52,6 +59,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   useEffect(() => {
+    localStorage.setItem('glasspro_auth', isAuthenticated.toString());
+  }, [isAuthenticated]);
+
+  useEffect(() => {
     localStorage.setItem('glass_inventory', JSON.stringify(inventory));
   }, [inventory]);
 
@@ -66,6 +77,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     localStorage.setItem('glass_workers', JSON.stringify(workers));
   }, [workers]);
+
+  const login = (username: string, password: string) => {
+    if (username === 'admin' && password === 'admin123') {
+      setIsAuthenticated(true);
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+  };
 
   const addInventoryItem = (item: Omit<GlassItem, 'id'>) => {
     const newItem = { ...item, id: Math.random().toString(36).substr(2, 9) };
@@ -140,7 +163,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   return (
     <AppContext.Provider value={{
-      inventory, invoices, services, workers,
+      inventory, invoices, services, workers, isAuthenticated, login, logout,
       addInventoryItem, updateInventoryItem, deleteInventoryItem,
       addInvoice, updateInvoice, updateInvoiceStatus, assignWorkerToInvoice, convertToInvoice,
       addService, deleteService,

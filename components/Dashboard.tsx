@@ -81,7 +81,6 @@ const Dashboard: React.FC = () => {
             <span className="material-icons-round text-sm">trending_up</span>
             <span>Total Sales Volume</span>
           </div>
-          <span className="material-icons-round absolute -right-6 -bottom-6 text-[10rem] text-slate-100 dark:text-slate-700/30 -rotate-12">payments</span>
         </div>
 
         <div className="bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden">
@@ -91,7 +90,6 @@ const Dashboard: React.FC = () => {
             <span className="material-icons-round text-sm">receipt</span>
             <span>Procurement Expenses</span>
           </div>
-          <span className="material-icons-round absolute -right-6 -bottom-6 text-[10rem] text-slate-100 dark:text-slate-700/30 -rotate-12">account_balance_wallet</span>
         </div>
 
         <div className="bg-emerald-500 p-8 rounded-[2.5rem] text-white shadow-xl shadow-emerald-500/30 relative overflow-hidden">
@@ -101,7 +99,6 @@ const Dashboard: React.FC = () => {
             <span className="material-icons-round text-sm">insights</span>
             <span>{netMargin.toFixed(1)}% Net Margin</span>
           </div>
-          <span className="material-icons-round absolute -right-6 -bottom-6 text-[10rem] text-white/10 -rotate-12">trending_up</span>
         </div>
       </div>
 
